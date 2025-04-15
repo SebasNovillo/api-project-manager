@@ -54,8 +54,42 @@ const getTasksByProject = async (req, res) => {
     }
   };
   
+  const completeTask = async (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const userId = req.user.userId;
+  
+    try {
+      // Buscar la tarea y su proyecto asociado
+      const task = await prisma.task.findUnique({
+        where: { id: taskId },
+        include: { project: true },
+      });
+  
+      if (!task) {
+        return res.status(404).json({ error: 'Task not found' });
+      }
+  
+      if (task.project.ownerId !== userId) {
+        return res.status(403).json({ error: 'Access denied to this task' });
+      }
+  
+      // Actualizar la tarea
+      const updatedTask = await prisma.task.update({
+        where: { id: taskId },
+        data: { completed: true },
+      });
+  
+      res.status(200).json({ message: 'Task marked as completed', task: updatedTask });
+    } catch (error) {
+      console.error("❌ Error completing task:", error);
+      res.status(500).json({ error: 'Error completing task' });
+    }
+  };
+  
+
   module.exports = {
     createTask,
     getTasksByProject,
+    completeTask,
   };
   
