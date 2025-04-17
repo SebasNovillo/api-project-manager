@@ -16,9 +16,10 @@ const register = async (req, res) => {
       data: {
         email,
         password: hashedPassword,
-        role: role || 'USER',
+        role: 'USER', // 🔒 forzamos USER, que es parte del enum
       },
     });
+    
 
     res.status(201).json({
       message: 'User registered',
