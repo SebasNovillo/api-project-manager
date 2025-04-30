@@ -5,7 +5,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth.routes');
-const projectRoutes = require('./routes/project.routes'); // ← Importamos las rutas de proyectos
+const projectRoutes = require('./routes/project.routes'); // ← Import projects's routes
 const taskRoutes = require('./routes/task.routes');
 
 const app = express();
@@ -18,9 +18,9 @@ app.use(morgan('dev'));
 
 
 // Rutas
-app.use('/api/auth', authRoutes);         // Para login y register
-app.use('/api/projects', projectRoutes);  // Para crear y ver proyectos
-app.use('/api/tasks', taskRoutes);        // Lista de tareas
+app.use('/api/auth', authRoutes);         // For login and register
+app.use('/api/projects', projectRoutes);  // For create and see projects
+app.use('/api/tasks', taskRoutes);        // Tasks list
 
 app.get('/', (req, res) => {
   res.send('API Project Manager is running');

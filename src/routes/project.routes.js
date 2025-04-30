@@ -7,7 +7,7 @@ const validateResult = require('../middlewares/validateResult');
 const isAdmin = require('../middlewares/isAdmin');
 
 
-// Todas las rutas están protegidas con JWT
+// All of the routes are protected by JWT
 router.post('/', authenticate, projectValidator, validateResult, createProject);
 router.get('/', authenticate, getMyProjects);
 router.get('/admin-check', authenticate, isAdmin, (req, res) => {
